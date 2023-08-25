@@ -638,8 +638,8 @@ impl Plugin for MouseLockPlugin {
         app
             // Add default config
             .insert_resource(MouseLock::default())
-            .add_system(automatic_lock_system)
-            .add_system(update_lock.in_base_set(CoreSet::PostUpdate));
+            .add_systems(Update, automatic_lock_system)
+            .add_systems(PostUpdate, update_lock);
     }
 }
 
@@ -669,7 +669,7 @@ fn main() {
         .add_startup_system(spawn_camera)
         .add_startup_system(spawn_shapes)
         .add_startup_system(spawn_info_text)
-        .add_system(toggle_wireframe_system)
-        .add_system(lock_camera)
+        .add_systems(Update, toggle_wireframe_system)
+        .add_systems(Update, lock_camera)
         .run();
 }
